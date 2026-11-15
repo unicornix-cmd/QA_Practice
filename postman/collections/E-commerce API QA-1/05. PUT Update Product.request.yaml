@@ -1,0 +1,32 @@
+$kind: http-request
+description: ""
+url: "{{baseUrl}}/products/1"
+method: PUT
+body:
+  type: json
+  content: "{\r
+
+    \    \"title\": \"Обновленный товар\",\r
+
+    \    \"price\": 75.32\r
+
+    }"
+auth:
+  type: bearer
+  credentials:
+    token: "{{authToken}}"
+scripts:
+  - type: afterResponse
+    code: "pm.test(\"Status code is 200 OK\", function () {\r
+
+      \    pm.response.to.have.status(200);\r
+
+      });\r
+
+      pm.test(\"Title was updated\", function () {\r
+
+      \    pm.expect(pm.response.json().title).to.eql(\"Обновленный товар\");\r
+
+      });"
+    language: text/javascript
+order: 4000

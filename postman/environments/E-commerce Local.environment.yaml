@@ -1,0 +1,6 @@
+name: E-commerce Local
+values:
+  - key: baseUrl
+    value: ''
+  - key: authToken
+    value: ''

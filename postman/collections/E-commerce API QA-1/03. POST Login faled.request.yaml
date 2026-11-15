@@ -1,0 +1,26 @@
+$kind: http-request
+description: ""
+url: "{{baseUrl}}/auth/login"
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \    \"username\": \"QA_434\",\r
+
+    \    \"password\": \"83_rwsf$\"\r
+
+    }"
+scripts:
+  - type: afterResponse
+    code: "// Проверяем, что логин не прошел успешно\r
+
+      pm.test(\"Status code is 401 Unauthorized\", function () {\r
+
+      \    pm.response.to.have.status(401);\r
+
+      });\r
+
+      \r\n"
+    language: text/javascript
+order: 6000

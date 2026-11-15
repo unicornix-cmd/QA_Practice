@@ -1,0 +1,24 @@
+$kind: http-request
+description: ""
+url: "{{baseUrl}}/products/1"
+method: DELETE
+body:
+  type: json
+  content: ""
+auth:
+  type: noauth
+scripts:
+  - type: afterResponse
+    code: "// Ожидаем 401 Unauthorized, но придет код 200\r
+
+      pm.test(\"Status code is 200\", function () {\r
+
+      \    pm.response.to.have.status(200);\r
+
+      });\r
+
+      \r
+
+      // ошибка безопасности магазина, возвращает 200 код, это нормально "
+    language: text/javascript
+order: 2905

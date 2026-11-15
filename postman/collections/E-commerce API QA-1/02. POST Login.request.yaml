@@ -1,0 +1,46 @@
+$kind: http-request
+description: ""
+url: "{{baseUrl}}/auth/login"
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \    \"username\": \"mor_2314\",\r
+
+    \    \"password\": \"83r5^_\"\r
+
+    }"
+scripts:
+  - type: afterResponse
+    code: "// Проверяем, что логин прошел успешно\r
+
+      pm.test(\"Status code is 201\", function () {\r
+
+      \    pm.response.to.have.status(201);\r
+
+      });\r
+
+      \r
+
+      pm.test(\"Response has a token\", function () {\r
+
+      \    pm.expect(pm.response.json()).to.have.property(\"token\");\r
+
+      });\r
+
+      \r
+
+      // Сохраняем полученный токен в наше окружение\r
+
+      var jsonData = pm.response.json();\r
+
+      if (jsonData.token) {\r
+
+      \    pm.environment.set(\"authToken\", jsonData.token);\r
+
+      \    console.log(\"Токен успешно сохранен в переменную authToken!\");\r
+
+      }"
+    language: text/javascript
+order: 7000

@@ -1,0 +1,40 @@
+$kind: http-request
+description: ""
+url: "{{baseUrl}}/products"
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \  \"id\": 0,\r
+
+    \  \"title\": \"Тестовый товар\",\r
+
+    \  \"price\": 11.1,\r
+
+    \  \"description\": \"Создан для тестирования API\",\r
+
+    \  \"category\": \"book\",\r
+
+    \  \"image\": \"http://example.com\"\r
+
+    }"
+auth:
+  type: bearer
+  credentials:
+    token: "{{authToken}}"
+scripts:
+  - type: afterResponse
+    code: "pm.test(\"Status code is 201 Created\", function () {\r
+
+      \    pm.response.to.have.status(201);\r
+
+      });\r
+
+      pm.test(\"Product title is correct\", function () {\r
+
+      \    pm.expect(pm.response.json().title).to.eql(\"Тестовый товар\");\r
+
+      });"
+    language: text/javascript
+order: 5000
